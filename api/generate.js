@@ -11,26 +11,67 @@ function isRtlLanguage(language = "") {
 }
 
 function buildPrompt({ brandName, productType, targetAudience, language }) {
-  return `You are an expert marketing copywriter.
 
-Generate marketing content for the following brand, written entirely in ${language}:
+function buildPrompt({ brandName, productType, targetAudience, language, contentType }) {
+
+let task = "";
+
+switch (contentType) {
+  case "advertisement":
+    task = "Write a persuasive advertisement.";
+    break;
+
+  case "product_description":
+    task = "Write a professional product description.";
+    break;
+
+  case "social_post":
+    task = "Write a viral social media post.";
+    break;
+
+  case "brand_name":
+    task = "Suggest 10 creative brand names.";
+    break;
+
+  case "slogan":
+    task = "Suggest 10 catchy slogans.";
+    break;
+
+  case "marketing_email":
+    task = "Write a marketing email.";
+    break;
+
+  case "video_script":
+    task = "Write a short promotional video script.";
+    break;
+
+  default:
+    task = "Generate marketing content.";
+}
+
+return `
+You are an expert marketing AI.
+
+${task}
+
+Language: ${language}
 
 Brand Name: ${brandName}
+
 Product Type: ${productType}
+
 Target Audience: ${targetAudience}
 
-Return ONLY a valid JSON object, with no markdown formatting, no code fences, and no extra commentary, using exactly this structure:
+Return ONLY valid JSON.
 
 {
-  "tagline": "A short, catchy tagline (max 10 words)",
-  "description": "A compelling product description (2-4 sentences)",
-  "social": "A social media post caption ready to publish (with emojis if appropriate)",
-  "hashtags": ["array", "of", "5-8", "relevant", "hashtags", "without", "the", "#", "symbol"]
+  "tagline":"",
+  "description":"",
+  "social":"",
+  "hashtags":[]
 }
-
-Ensure the JSON is syntactically valid and all text is written in ${language}.`;
+`;
 }
-
 function extractJson(text) {
   if (!text) return null;
 
@@ -80,7 +121,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const { brandName, productType, targetAudience, language } = body || {};
+    const { brandName, productType, targetAudience, language, contentType } = body || {};
 
     if (!brandName || !productType || !targetAudience || !language) {
       return res.status(400).json({
@@ -88,7 +129,13 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    const prompt = buildPrompt({ brandName, productType, targetAudience, language });
+    const prompt = buildPrompt({
+  brandName,
+  productType,
+  targetAudience,
+  language,
+  contentType
+});
 
     const geminiResponse = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
       method: "POST",
@@ -149,3 +196,4 @@ module.exports = async function handler(req, res) {
     });
   }
 };
+  
