@@ -47,7 +47,6 @@ var contentTypeSelect = document.getElementById("contentType");
       targetAudience: audienceInput.value.trim(),
       language: languageSelect.value,contentType: contentTypeSelect.value
     };
-
     runGeneration(data);
   });
 
