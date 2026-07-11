@@ -8,6 +8,7 @@
   var productInput = document.getElementById("productType");
   var audienceInput = document.getElementById("targetAudience");
   var languageSelect = document.getElementById("language");
+var contentTypeSelect = document.getElementById("contentType");
 
   var generateBtn = document.getElementById("generateBtn");
   var resultTitle = document.getElementById("resultTitle");
@@ -44,7 +45,7 @@
       brandName: brandInput.value.trim(),
       productType: productInput.value.trim(),
       targetAudience: audienceInput.value.trim(),
-      language: languageSelect.value
+      language: languageSelect.value,contentType: contentTypeSelect.value
     };
 
     runGeneration(data);
@@ -72,6 +73,7 @@
     en: {
       loading: "Plotting your content…",
       ready: "Content ready",
+      error: "Something went wrong. Please try again.",
       copy: "Copy",
       copied: "Copied",
       tagline: "Tagline",
@@ -82,6 +84,7 @@
     ar: {
       loading: "جارٍ صياغة المحتوى…",
       ready: "المحتوى جاهز",
+      error: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
       copy: "نسخ",
       copied: "تم النسخ",
       tagline: "الشعار الإعلاني",
@@ -92,6 +95,7 @@
     fr: {
       loading: "Rédaction de votre contenu…",
       ready: "Contenu prêt",
+      error: "Une erreur est survenue. Veuillez réessayer.",
       copy: "Copier",
       copied: "Copié",
       tagline: "Slogan",
@@ -116,18 +120,57 @@
     resultDot.classList.remove("is-ready");
     resultTitle.textContent = t.loading;
 
-    window.setTimeout(function () {
-      var content = buildContent(data);
-      renderOutput(content, t);
+    fetchContent(data)
+      .then(function (content) {
+        renderOutput(content, t);
 
-      generateBtn.disabled = false;
-      generateBtn.classList.remove("is-loading");
-      loadingState.hidden = true;
-      outputState.hidden = false;
-      copyBtn.hidden = false;
-      resultDot.classList.add("is-ready");
-      resultTitle.textContent = t.ready;
-    }, 1100);
+        generateBtn.disabled = false;
+        generateBtn.classList.remove("is-loading");
+        loadingState.hidden = true;
+        outputState.hidden = false;
+        copyBtn.hidden = false;
+        resultDot.classList.add("is-ready");
+        resultTitle.textContent = t.ready;
+      })
+      .catch(function (err) {
+        generateBtn.disabled = false;
+        generateBtn.classList.remove("is-loading");
+        loadingState.hidden = true;
+        copyBtn.hidden = true;
+        resultDot.classList.remove("is-ready");
+        resultTitle.textContent = t.error || "Something went wrong";
+
+        outputState.hidden = false;
+        outputState.dir = "ltr";
+        outputState.innerHTML =
+          "<p class=\"output-text\">" + escapeHtml(err && err.message ? err.message : String(err)) + "</p>";
+      });
+  }
+
+  function fetchContent(data) {
+    return fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(function (res) {
+        if (!res.ok) {
+          return res
+            .json()
+            .catch(function () { return null; })
+            .then(function (body) {
+              var message = (body && body.error) || ("Request failed with status " + res.status);
+              throw new Error(message);
+            });
+        }
+        return res.json();
+      })
+      .then(function (content) {
+        if (!content || typeof content !== "object") {
+          throw new Error("Unexpected response from server");
+        }
+        return content;
+      });
   }
 
   function renderOutput(content, t) {
@@ -188,43 +231,5 @@
     ta.select();
     try { document.execCommand("copy"); } catch (err) { /* no-op */ }
     document.body.removeChild(ta);
-  }
-
-  // ---- Lightweight, local "generation" so the UI works standalone. ----
-  // Swap the body of this function for a real API call when a backend is connected.
-  function buildContent(data) {
-    var brand = data.brandName;
-    var product = data.productType;
-    var audience = data.targetAudience;
-
-    var hashSeed = (brand + product).replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, "");
-
-    if (data.language === "ar") {
-      return {
-        dir: "rtl",
-        tagline: brand + " — حيث يلتقي " + product + " باحتياجات " + audience + ".",
-        description: "تقدّم " + brand + " تجربة مميزة في مجال " + product + "، صُممت خصيصًا لتناسب " + audience + ". جودة تستحق الثقة، وتفاصيل تُحدث فرقًا حقيقيًا في يومك.",
-        social: "✨ تعرّف على " + brand + ". " + product + " الذي طالما انتظرته، مصمم من أجلك أنت يا " + audience + ". جرّبه اليوم!",
-        hashtags: ["#" + brand.replace(/\s+/g, ""), "#" + hashSeed, "#جودة_تستحق"]
-      };
-    }
-
-    if (data.language === "fr") {
-      return {
-        dir: "ltr",
-        tagline: brand + " — votre " + product + " pensé pour " + audience + ".",
-        description: brand + " réinvente " + product + " avec une exigence de qualité pensée pour " + audience + ". Chaque détail est conçu pour s'intégrer naturellement à votre quotidien.",
-        social: "✨ Découvrez " + brand + ". Le " + product + " que " + audience + " attendait. Essayez-le dès aujourd'hui !",
-        hashtags: ["#" + brand.replace(/\s+/g, ""), "#" + hashSeed, "#QualitéAuQuotidien"]
-      };
-    }
-
-    return {
-      dir: "ltr",
-      tagline: brand + " — " + product + ", made for " + audience + ".",
-      description: brand + " brings a fresh take on " + product + ", crafted with " + audience + " in mind. Thoughtful details, dependable quality, and a look that fits right into your day.",
-      social: "✨ Meet " + brand + ". The " + product + " " + audience + " have been waiting for. Try it today!",
-      hashtags: ["#" + brand.replace(/\s+/g, ""), "#" + hashSeed, "#MadeForYou"]
-    };
   }
 })();
