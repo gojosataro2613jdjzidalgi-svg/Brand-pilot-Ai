@@ -10,7 +10,6 @@ function isRtlLanguage(language = "") {
   return rtlLangs.includes(language.trim().toLowerCase());
 }
 
-function buildPrompt({ brandName, productType, targetAudience, language }) {
 
 function buildPrompt({ brandName, productType, targetAudience, language, contentType }) {
 
