@@ -2,7 +2,7 @@
 // Vercel Serverless Function
 // Generates marketing content using Google Gemini 2.5 Flash
 
-const GEMINI_MODEL = "gemini-2.5-flash";
+const GEMINI_MODEL = "gemini-2.5-flash-lite";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 function isRtlLanguage(language = "") {
@@ -195,4 +195,3 @@ module.exports = async function handler(req, res) {
     });
   }
 };
-  
