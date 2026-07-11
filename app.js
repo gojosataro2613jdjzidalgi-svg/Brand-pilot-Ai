@@ -47,6 +47,7 @@ var contentTypeSelect = document.getElementById("contentType");
       targetAudience: audienceInput.value.trim(),
       language: languageSelect.value,contentType: contentTypeSelect.value
     };
+
     runGeneration(data);
   });
 
@@ -158,7 +159,9 @@ var contentTypeSelect = document.getElementById("contentType");
             .json()
             .catch(function () { return null; })
             .then(function (body) {
-              var message = (body && body.error) || ("Request failed with status " + res.status);
+              var message =
+  (body && (body.details || body.error)) ||
+  ("Request failed with status " + res.status);
               throw new Error(message);
             });
         }
