@@ -29,8 +29,26 @@ switch (contentType) {
     break;
 
   case "brand_name":
-    task = "Suggest 10 creative brand names.";
-    break;
+    return `
+You are a world-class branding expert.
+
+Generate 10 unique and memorable brand names.
+
+Language: ${language}
+
+Product Type: ${productType}
+
+Target Audience: ${targetAudience}
+
+Return ONLY valid JSON in this format:
+
+{
+  "tagline": "Name 1, Name 2, Name 3, Name 4, Name 5, Name 6, Name 7, Name 8, Name 9, Name 10",
+  "description": "A short explanation of why these names fit the brand.",
+  "social": "Recommend the best brand name and explain why.",
+  "hashtags": ["#Brand", "#Startup", "#Business", "#Marketing"]
+}
+`;
 
   case "slogan":
     task = "Suggest 10 catchy slogans.";
