@@ -1,0 +1,229 @@
+// api/generate.js
+// Vercel Serverless Function
+// Generates marketing content using Google Gemini 2.5 Flash
+
+const GEMINI_MODEL = "gemini-3.5-flash";
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+
+function isRtlLanguage(language = "") {
+  const rtlLangs = ["arabic", "ar", "hebrew", "he", "urdu", "ur", "farsi", "persian", "fa"];
+  return rtlLangs.includes(language.trim().toLowerCase());
+}
+
+
+function buildPrompt({ brandName, productType, targetAudience, language, contentType }) {
+
+let task = "";
+
+switch (contentType) {
+  case "advertisement":
+    task = "Write a persuasive advertisement.";
+    break;
+
+  case "product_description":
+    task = "Write a professional product description.";
+    break;
+
+  case "social_post":
+    task = "Write a viral social media post.";
+    break;
+
+  case "brand_name":
+    return `
+You are a world-class branding expert.
+
+Generate 10 unique and memorable brand names.
+
+Language: ${language}
+
+Product Type: ${productType}
+
+Target Audience: ${targetAudience}
+
+Return ONLY valid JSON in this format:
+
+{
+  "tagline": "Name 1, Name 2, Name 3, Name 4, Name 5, Name 6, Name 7, Name 8, Name 9, Name 10",
+  "description": "A short explanation of why these names fit the brand.",
+  "social": "Recommend the best brand name and explain why.",
+  "hashtags": ["#Brand", "#Startup", "#Business", "#Marketing"]
+}
+`;
+
+  case "slogan":
+    task = "Suggest 10 catchy slogans.";
+    break;
+
+  case "marketing_email":
+    task = "Write a marketing email.";
+    break;
+
+  case "video_script":
+    task = "Write a short promotional video script.";
+    break;
+
+  default:
+    task = "Generate marketing content.";
+}
+
+return `
+You are BrandPilot AI, an elite marketing intelligence system.
+
+Your mission is to create world-class marketing content for real businesses.
+
+Before answering every request:
+- Analyze the product, audience, and business goal.
+- Think step by step before writing.
+- Automatically choose the best marketing strategy.
+- Act as the world's top expert for the requested task.
+- Create original, persuasive, high-converting, and professional content.
+- Never give generic or repetitive answers.
+- Adapt the tone to the target audience.
+- Make every response practical and ready to use.
+- Focus on creativity, trust, engagement, and conversions.
+- Always deliver your highest-quality work.
+
+${task}
+
+Language: ${language}
+
+Brand Name: ${brandName}
+
+Product Type: ${productType}
+
+Target Audience: ${targetAudience}
+
+Return ONLY valid JSON.
+
+{
+  "tagline":"",
+  "description":"",
+  "social":"",
+  "hashtags":[]
+}
+`;
+}
+function extractJson(text) {
+  if (!text) return null;
+
+  // Strip markdown code fences if present
+  let cleaned = text.trim();
+  cleaned = cleaned.replace(/^```json\s*/i, "").replace(/^```\s*/i, "");
+  cleaned = cleaned.replace(/```\s*$/i, "");
+  cleaned = cleaned.trim();
+
+  // Try direct parse first
+  try {
+    return JSON.parse(cleaned);
+  } catch (e) {
+    // Fall back to extracting the first {...} block
+    const match = cleaned.match(/\{[\s\S]*\}/);
+    if (match) {
+      try {
+        return JSON.parse(match[0]);
+      } catch (e2) {
+        return null;
+      }
+    }
+    return null;
+  }
+}
+
+module.exports = async function handler(req, res) {
+  // Only allow POST requests
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({ error: "Method not allowed. Use POST." });
+  }
+
+  try {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: "Server misconfiguration: missing GEMINI_API_KEY." });
+    }
+
+    // Parse body (Vercel usually parses JSON automatically, but handle raw string too)
+    let body = req.body;
+    if (typeof body === "string") {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        return res.status(400).json({ error: "Invalid JSON in request body." });
+      }
+    }
+
+    const { brandName, productType, targetAudience, language, contentType } = body || {};
+
+    if (!brandName || !productType || !targetAudience || !language) {
+      return res.status(400).json({
+        error: "Missing required fields: brandName, productType, targetAudience, language are all required."
+      });
+    }
+
+    const prompt = buildPrompt({
+  brandName,
+  productType,
+  targetAudience,
+  language,
+  contentType
+});
+
+    const geminiResponse = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: prompt }]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.8,
+          responseMimeType: "application/json"
+        }
+      })
+    });
+
+    if (!geminiResponse.ok) {
+      const errText = await geminiResponse.text();
+      return res.status(502).json({
+        error: "Gemini API request failed.",
+        details: errText
+      });
+    }
+
+    const data = await geminiResponse.json();
+
+    const candidateText =
+      data?.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") || "";
+
+    const parsed = extractJson(candidateText);
+
+    if (!parsed) {
+      return res.status(502).json({
+        error: "Failed to parse content generated by Gemini.",
+        raw: candidateText
+      });
+    }
+
+    const dir = isRtlLanguage(language) ? "rtl" : "ltr";
+
+    const result = {
+      dir,
+      tagline: typeof parsed.tagline === "string" ? parsed.tagline : "",
+      description: typeof parsed.description === "string" ? parsed.description : "",
+      social: typeof parsed.social === "string" ? parsed.social : "",
+      hashtags: Array.isArray(parsed.hashtags) ? parsed.hashtags.filter((h) => typeof h === "string") : []
+    };
+
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(500).json({
+      error: "Unexpected server error.",
+      details: error?.message || String(error)
+    });
+  }
+};
