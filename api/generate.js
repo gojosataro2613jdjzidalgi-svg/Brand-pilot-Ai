@@ -93,7 +93,13 @@ Product Type: ${productType}
 
 Target Audience: ${targetAudience}
 
+IMPORTANT:
 Return ONLY valid JSON.
+Do not write any text before the JSON.
+Do not write any text after the JSON.
+Do not use Markdown.
+Do not wrap the JSON inside ```json.
+The response must be directly parseable as valid JSON.
 
 {
   "tagline":"",
