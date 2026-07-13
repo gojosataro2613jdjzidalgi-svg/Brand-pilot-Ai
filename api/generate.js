@@ -11,7 +11,7 @@ function isRtlLanguage(language = "") {
 }
 
 
-function buildPrompt({ brandName, productType, targetAudience, language, contentType }) {
+function buildPrompt({ brandName, productType, targetAudience, language,goal, contentType }) {
 
 let task = "";
 
@@ -35,7 +35,7 @@ You are a world-class branding expert.
 Generate 10 unique and memorable brand names.
 
 Language: ${language}
-
+Marketing Goal: ${goal}
 Product Type: ${productType}
 
 Target Audience: ${targetAudience}
@@ -158,7 +158,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const { brandName, productType, targetAudience, language, contentType } = body || {};
+    const { brandName, productType, targetAudience, language,goal, contentType } = body || {};
 
     if (!brandName || !productType || !targetAudience || !language) {
       return res.status(400).json({
@@ -171,6 +171,7 @@ module.exports = async function handler(req, res) {
   productType,
   targetAudience,
   language,
+  goal,
   contentType
 });
 
