@@ -8,6 +8,7 @@
   var productInput = document.getElementById("productType");
   var audienceInput = document.getElementById("targetAudience");
   var languageSelect = document.getElementById("language");
+  var goalSelect = document.getElementById("goal");
 var contentTypeSelect = document.getElementById("contentType");
 
   var generateBtn = document.getElementById("generateBtn");
@@ -42,10 +43,14 @@ var contentTypeSelect = document.getElementById("contentType");
     if (!valid) return;
 
     var data = {
-      brandName: brandInput.value.trim(),
-      productType: productInput.value.trim(),
-      targetAudience: audienceInput.value.trim(),
-      language: languageSelect.value,contentType: contentTypeSelect.value
+  brandName: brandInput.value.trim(),
+  productType: productInput.value.trim(),
+  targetAudience: audienceInput.value.trim(),
+  language: languageSelect.value,
+  goal: goalSelect.value,
+  contentType: contentTypeSelect.value
+};
+      
     };
 
     runGeneration(data);
