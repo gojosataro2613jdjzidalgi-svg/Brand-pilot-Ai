@@ -50,8 +50,7 @@ var contentTypeSelect = document.getElementById("contentType");
   goal: goalSelect.value,
   contentType: contentTypeSelect.value
 };
-      
-    };
+
 
     runGeneration(data);
   });
