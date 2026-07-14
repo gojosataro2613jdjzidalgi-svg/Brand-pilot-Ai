@@ -150,6 +150,54 @@ function extractJson(text) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Retry configuration for the Gemini API request.
+//
+// Gemini occasionally returns HTTP 503 (UNAVAILABLE) when the model is
+// temporarily overloaded. This is a transient error, so it's safe to retry
+// the exact same request a few times before giving up.
+//
+// Behavior:
+// - Only retries on HTTP 503. Any other status (400, 401, 429, 500, etc.)
+//   is returned immediately without retrying, since retrying those would
+//   not help (or could make things worse, e.g. for rate limits).
+// - Retries up to MAX_RETRIES times (3 retries = up to 4 total attempts).
+// - Waits RETRY_DELAY_MS (2000ms) between attempts.
+// ---------------------------------------------------------------------------
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 2000;
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Calls the Gemini API and automatically retries on HTTP 503 (UNAVAILABLE).
+// `fetchOptions` are passed through untouched to `fetch`.
+// Returns the same Response object that `fetch` would return, whether it
+// succeeded or ultimately failed after all retries.
+async function fetchGeminiWithRetry(url, fetchOptions) {
+  let lastResponse;
+
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    const response = await fetch(url, fetchOptions);
+
+    // Success or a non-503 error: return immediately, no retry needed.
+    if (response.status !== 503) {
+      return response;
+    }
+
+    lastResponse = response;
+
+    // If we still have retries left, wait and try again.
+    if (attempt < MAX_RETRIES) {
+      await sleep(RETRY_DELAY_MS);
+    }
+  }
+
+  // All attempts (including retries) resulted in 503; return the last response.
+  return lastResponse;
+}
+
 module.exports = async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== "POST") {
@@ -190,7 +238,9 @@ module.exports = async function handler(req, res) {
   contentType
 });
 
-    const geminiResponse = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+    // Uses fetchGeminiWithRetry instead of a plain fetch() so that transient
+    // 503 (UNAVAILABLE) errors from Gemini are retried automatically.
+    const geminiResponse = await fetchGeminiWithRetry(`${GEMINI_URL}?key=${apiKey}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
