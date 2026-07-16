@@ -11,7 +11,7 @@ function isRtlLanguage(language = "") {
 }
 
 
-function buildPrompt({ brandName, productType, targetAudience, language,goal, contentType }) {
+function buildPrompt({ brandName, productType, targetAudience, language,goal,tone, contentType }) {
 
 let task = "";
 
@@ -36,6 +36,7 @@ Generate 10 unique and memorable brand names.
 
 Language: ${language}
 Marketing Goal: ${goal}
+Tone of Voice: ${tone}
 Product Type: ${productType}
 
 Target Audience: ${targetAudience}
@@ -96,11 +97,24 @@ Rules:
 - Maximize clarity, creativity, and conversion potential.
 - Always deliver premium-quality marketing content.
 
+Tone of Voice Instructions:
+- Professional: Formal, credible, and business-oriented.
+- Friendly: Warm, approachable, and conversational.
+- Luxury: Elegant, premium, and sophisticated.
+- Persuasive: Highly convincing with strong calls to action.
+- Gen Z: Trendy, energetic, and modern.
+- Minimal: Clear, concise, and simple.
+- Funny: Light-hearted, humorous, and engaging.
+
+Always strictly follow the selected Tone of Voice.
+
 ${task}
 
 Language: ${language}
 
 Marketing Goal: ${goal}
+
+Tone of Voice: ${tone}
 
 Brand Name: ${brandName}
 
@@ -221,7 +235,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const { brandName, productType, targetAudience, language,goal, contentType } = body || {};
+    const { brandName, productType, targetAudience, language,goal,tone, contentType } = body || {};
 
     if (!brandName || !productType || !targetAudience || !language) {
       return res.status(400).json({
@@ -235,6 +249,7 @@ module.exports = async function handler(req, res) {
   targetAudience,
   language,
   goal,
+  tone,
   contentType
 });
 
