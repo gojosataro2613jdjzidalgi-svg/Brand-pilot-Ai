@@ -9,6 +9,7 @@
   var audienceInput = document.getElementById("targetAudience");
   var languageSelect = document.getElementById("language");
   var goalSelect = document.getElementById("goal");
+  var toneSelect = document.getElementById("tone");
 var contentTypeSelect = document.getElementById("contentType");
 
   var generateBtn = document.getElementById("generateBtn");
@@ -48,9 +49,9 @@ var contentTypeSelect = document.getElementById("contentType");
   targetAudience: audienceInput.value.trim(),
   language: languageSelect.value,
   goal: goalSelect.value,
+  tone: toneSelect.value,
   contentType: contentTypeSelect.value
 };
-
 
     runGeneration(data);
   });
