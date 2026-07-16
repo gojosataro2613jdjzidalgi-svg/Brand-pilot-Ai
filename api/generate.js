@@ -11,7 +11,24 @@ function isRtlLanguage(language = "") {
 }
 
 
-function buildPrompt({ brandName, productType, targetAudience, language,goal,tone, contentType }) {
+// Platform-specific writing instructions injected into the prompt so the
+// generated content is optimized for how each platform is actually consumed.
+const PLATFORM_INSTRUCTIONS = {
+  general: "General: Write balanced, versatile marketing copy that is not tied to any single platform's format or conventions.",
+  instagram: "Instagram: Write an engaging, visually descriptive caption. Use a warm, scroll-stopping hook, tasteful emojis, and end the social post with a strong set of relevant hashtags.",
+  facebook: "Facebook: Write warm, community-focused content that encourages comments, shares, and conversation. Favor a conversational, relatable tone over a hard sell.",
+  tiktok: "TikTok: Write short, high-energy, trend-aware content with a scroll-stopping hook in the first line. Keep sentences punchy and casual, suited for a short-form video caption.",
+  linkedin: "LinkedIn: Write polished, professional, business-oriented content. Focus on credibility, insight, and value for a professional audience. Avoid slang and excessive emojis.",
+  x: "X (Twitter): Write concise, punchy, tweet-style content. Keep the social post short and impactful, suitable for a single tweet, with sharp wording and minimal filler.",
+  youtube: "YouTube: Write content suited for a video title and description. Emphasize curiosity, clarity, and audience retention, and encourage viewers to watch, like, and subscribe."
+};
+
+function getPlatformInstruction(platform) {
+  const key = (platform || "general").trim().toLowerCase();
+  return PLATFORM_INSTRUCTIONS[key] || PLATFORM_INSTRUCTIONS.general;
+}
+
+function buildPrompt({ brandName, productType, targetAudience, language,goal,tone, contentType, platform }) {
 
 let task = "";
 
@@ -38,6 +55,7 @@ Language: ${language}
 Marketing Goal: ${goal}
 Tone of Voice: ${tone}
 Product Type: ${productType}
+Target Platform: ${platform || "general"}
 
 Target Audience: ${targetAudience}
 
@@ -108,6 +126,11 @@ Tone of Voice Instructions:
 
 Always strictly follow the selected Tone of Voice.
 
+Platform Optimization Instructions:
+${getPlatformInstruction(platform)}
+
+Always optimize the "social" field (and the overall content style) specifically for the selected platform above, while keeping the tagline, description, and hashtags consistent with it.
+
 ${task}
 
 Language: ${language}
@@ -115,6 +138,8 @@ Language: ${language}
 Marketing Goal: ${goal}
 
 Tone of Voice: ${tone}
+
+Target Platform: ${platform || "general"}
 
 Brand Name: ${brandName}
 
@@ -235,7 +260,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const { brandName, productType, targetAudience, language,goal,tone, contentType } = body || {};
+    const { brandName, productType, targetAudience, language,goal,tone, contentType, platform } = body || {};
 
     if (!brandName || !productType || !targetAudience || !language) {
       return res.status(400).json({
@@ -250,7 +275,8 @@ module.exports = async function handler(req, res) {
   language,
   goal,
   tone,
-  contentType
+  contentType,
+  platform
 });
 
     // Uses fetchGeminiWithRetry instead of a plain fetch() so that transient
