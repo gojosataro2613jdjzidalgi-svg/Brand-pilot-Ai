@@ -11,6 +11,7 @@
   var goalSelect = document.getElementById("goal");
   var toneSelect = document.getElementById("tone");
 var contentTypeSelect = document.getElementById("contentType");
+var platformSelect = document.getElementById("platform");
 
   var generateBtn = document.getElementById("generateBtn");
   var resultTitle = document.getElementById("resultTitle");
@@ -50,7 +51,8 @@ var contentTypeSelect = document.getElementById("contentType");
   language: languageSelect.value,
   goal: goalSelect.value,
   tone: toneSelect.value,
-  contentType: contentTypeSelect.value
+  contentType: contentTypeSelect.value,
+  platform: platformSelect.value
 };
 
     runGeneration(data);
