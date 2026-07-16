@@ -225,6 +225,7 @@ body{
 .select-wrap select{
   appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
   padding-right: 38px;
   cursor: pointer;
 }
@@ -405,6 +406,7 @@ body{
   line-height: 1.7;
   color: var(--ink);
   white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 .output-tags{
   display: flex;
@@ -462,4 +464,54 @@ body{
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
-https://fonts.googleapis.com
+
+/* ---------------------------------------------
+   Accessibility: visible keyboard focus states
+   (mouse users see no change — :focus-visible only
+   triggers for keyboard/programmatic focus)
+--------------------------------------------- */
+.logo:focus-visible,
+.copy-btn:focus-visible,
+.footer-link:focus-visible{
+  outline: 3px solid rgba(79,70,229,.5);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.field input:focus-visible,
+.field select:focus-visible{
+  outline: 3px solid rgba(79,70,229,.5);
+  outline-offset: 1px;
+}
+.skip-link{
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: .88rem;
+  font-weight: 600;
+  z-index: 100;
+  transition: top .15s ease;
+}
+.skip-link:focus{
+  top: 12px;
+}
+
+.footer-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.footer-links a{
+  color:inherit;
+  text-decoration:none;
+  opacity:.8;
+  transition:.2s;
+}
+
+.footer-links a:hover{
+  opacity:1;
+}

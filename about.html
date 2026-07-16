@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — BrandPilot AI</title>
+<meta name="description" content="BrandPilot AI helps brands generate on-brand marketing content in seconds. Learn our mission, vision, and the features that power the Content Studio.">
+<link rel="canonical" href="https://brandpilot.ai/about.html">
+<meta name="theme-color" content="#4F46E5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About — BrandPilot AI">
+<meta property="og:description" content="Learn what BrandPilot AI is, our mission and vision, and the features that power the Content Studio.">
+<meta property="og:url" content="https://brandpilot.ai/about.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About — BrandPilot AI">
+<meta name="twitter:description" content="Learn what BrandPilot AI is, our mission and vision, and the features that power the Content Studio.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='36' y2='36' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='18' fill='%23fff'/%3E%3Ccircle cx='20' cy='20' r='18' stroke='url(%23g)' stroke-width='2.4'/%3E%3Cpath d='M20 8 L25 20 L20 32 L15 20 Z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!--
+  Page-specific styles for about.html only.
+  Reuses the design tokens (--navy, --indigo, --gradient, --radius-*, --shadow-*, etc.)
+  already defined in :root inside style.css. No rule in style.css is modified,
+  overridden, or duplicated here — these are new, additive classes for this page.
+-->
+<style>
+  .skip-link{
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: .88rem;
+    font-weight: 600;
+    z-index: 100;
+    transition: top .15s ease;
+  }
+  .skip-link:focus{ top: 12px; }
+
+  .about-hero{
+    padding: 56px 24px 8px;
+    text-align: center;
+  }
+  .about-hero .eyebrow{ margin: 0 0 14px; }
+  .about-hero h1{
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    color: var(--navy);
+  }
+  .about-hero .hero-sub{ margin: 0 auto; }
+
+  .about-wrap{
+    padding: 32px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .about-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 30px 28px 32px;
+  }
+  .about-card h2{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--navy);
+    margin: 0 0 14px;
+  }
+  .about-card p{
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: .98rem;
+    line-height: 1.75;
+  }
+  .about-card p:last-child{ margin-bottom: 0; }
+
+  /* Mission / Vision two-column layout, same responsive
+     breakpoint pattern as the generator/result grid */
+  .mv-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .mv-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 28px 26px 30px;
+  }
+  .mv-icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--gradient);
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .mv-card h2{
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    color: var(--navy);
+    margin: 0 0 10px;
+  }
+  .mv-card p{
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: .95rem;
+    line-height: 1.7;
+  }
+
+  /* Feature grid */
+  .features-heading{
+    text-align: center;
+    padding: 8px 24px 0;
+  }
+  .features-heading .eyebrow{ margin: 0 0 12px; }
+  .features-heading h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.4vw, 2rem);
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    margin: 0 0 10px;
+  }
+  .features-heading p{
+    max-width: 520px;
+    margin: 0 auto;
+    color: var(--ink-dim);
+    font-size: .98rem;
+    line-height: 1.6;
+  }
+
+  .features-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .feature-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 24px 22px 26px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .feature-card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 1px 2px rgba(16,23,42,.04), 0 18px 36px -16px rgba(16,23,42,.18);
+  }
+  .feature-icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #EEF0FE;
+    color: var(--indigo);
+    margin-bottom: 14px;
+  }
+  .feature-card h3{
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--navy);
+    margin: 0 0 8px;
+  }
+  .feature-card p{
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: .92rem;
+    line-height: 1.65;
+  }
+
+  /* CTA band */
+  .about-cta{
+    text-align: center;
+    padding: 12px 24px 8px;
+  }
+  .about-cta-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 34px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .about-cta-card h2{
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin: 0;
+  }
+  .about-cta-card p{
+    margin: 0;
+    color: var(--ink-dim);
+    font-size: .95rem;
+    max-width: 440px;
+  }
+  .about-cta-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    padding: 14px 26px;
+    border-radius: var(--radius-md);
+    background: var(--gradient);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: .98rem;
+    box-shadow: var(--shadow-btn);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .about-cta-btn:hover{ transform: translateY(-1px); filter: brightness(1.04); }
+  .about-cta-btn:focus-visible{
+    outline: 3px solid rgba(79,70,229,.5);
+    outline-offset: 3px;
+  }
+
+  .footer-link{
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .footer-link:hover{ color: var(--indigo); border-color: var(--indigo); }
+
+  .logo:focus-visible,
+  .footer-link:focus-visible{
+    outline: 3px solid rgba(79,70,229,.5);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (min-width: 760px){
+    .mv-grid{ grid-template-columns: 1fr 1fr; }
+    .features-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 480px){
+    .about-wrap{ padding: 22px 18px 18px; }
+    .about-card{ padding: 22px 18px 24px; }
+    .mv-card{ padding: 22px 18px 24px; }
+    .about-hero{ padding: 40px 18px 8px; }
+    .about-cta-card{ padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="bg-field" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="index.html" class="logo" aria-label="BrandPilot AI — home">
+      <span class="logo-mark">
+        <svg viewBox="0 0 40 40" width="26" height="26" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2.4"/>
+          <path d="M20 8 L25 20 L20 32 L15 20 Z" fill="url(#g1)"/>
+          <defs>
+            <linearGradient id="g1" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4F46E5"/>
+              <stop offset="1" stop-color="#06B6D4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <span class="logo-text">BrandPilot <em>AI</em></span>
+    </a>
+    <span class="header-tag">Content Studio</span>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <section class="about-hero wrap">
+    <p class="eyebrow">About us</p>
+    <h1>Marketing content, charted for your brand.</h1>
+    <p class="hero-sub">BrandPilot AI is a content studio built for founders, marketers, and small teams who need great copy fast — without losing the voice that makes their brand recognizable.</p>
+  </section>
+
+  <section class="wrap about-wrap">
+    <div class="about-card">
+      <h2>What is BrandPilot AI?</h2>
+      <p>BrandPilot AI is an AI-powered content generator that turns a few details about your brand — your name, product, audience, and tone — into ready-to-use marketing copy. Instead of staring at a blank page, you fill in your brand's "flight details" and BrandPilot AI drafts advertisements, product descriptions, social posts, slogans, marketing emails, and video scripts in seconds.</p>
+      <p>It's built for the reality of modern marketing: multiple platforms, multiple content types, and never enough time. Whether you're launching a new product on Instagram or writing your fifth email campaign this month, BrandPilot AI gives you a strong first draft you can refine and publish with confidence.</p>
+    </div>
+
+    <div class="mv-grid">
+      <div class="mv-card">
+        <span class="mv-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <h2>Our mission</h2>
+        <p>To give every brand — not just the ones with big marketing teams — access to fast, high-quality, on-brand content. We believe great copy shouldn't depend on how large your team is or how many hours you have in a day.</p>
+      </div>
+      <div class="mv-card">
+        <span class="mv-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          </svg>
+        </span>
+        <h2>Our vision</h2>
+        <p>A future where AI handles the first draft of every marketing task, so people can spend their time on strategy, creativity, and the relationships that actually grow a brand — not on wrestling with a blank document.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-heading wrap">
+    <p class="eyebrow">Features</p>
+    <h2>Everything you need to draft on-brand content</h2>
+    <p>One form, seven content types, and a result that's ready to copy, paste, and refine.</p>
+  </section>
+
+  <section class="wrap about-wrap">
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <h3>Multiple content types</h3>
+        <p>Generate advertisements, product descriptions, social posts, brand names, slogans, marketing emails, and video scripts — all from the same form.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M3 9h18" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </span>
+        <h3>Platform-aware copy</h3>
+        <p>Tailor output for Instagram, Facebook, TikTok, LinkedIn, X, YouTube, or a general-purpose draft that works anywhere.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <h3>Goal-driven tone</h3>
+        <p>Set a marketing goal — sales, awareness, leads, traffic, downloads, or engagement — and a tone of voice, from professional to Gen Z.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <h3>Multilingual output</h3>
+        <p>Draft content in English, Arabic, or French, so you can reach different audiences without starting from scratch.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <h3>One-click copy</h3>
+        <p>Copy your generated content straight to the clipboard the moment it's ready — no extra clicks, no formatting cleanup.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <h3>Fast first drafts</h3>
+        <p>Go from a blank page to a usable draft in seconds — then spend your time refining, not starting from zero.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="wrap about-cta">
+    <div class="about-cta-card">
+      <h2>Ready to draft your next piece of content?</h2>
+      <p>Give BrandPilot AI your brand's flight details and get a ready-to-use draft in seconds.</p>
+      <a href="index.html" class="about-cta-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
+        </svg>
+        Start generating content
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> BrandPilot AI</span>
+    <a href="index.html" class="footer-link">Back to Content Studio</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

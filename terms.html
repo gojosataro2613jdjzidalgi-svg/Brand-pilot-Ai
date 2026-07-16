@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — BrandPilot AI</title>
+<meta name="description" content="Terms of Service for BrandPilot AI — acceptable use, AI-generated content disclaimer, limitation of liability, and user responsibilities.">
+<link rel="canonical" href="https://brandpilot.ai/terms.html">
+<meta name="theme-color" content="#4F46E5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Terms of Service — BrandPilot AI">
+<meta property="og:description" content="Read the Terms of Service for BrandPilot AI, including acceptable use, AI-content disclaimers, and liability.">
+<meta property="og:url" content="https://brandpilot.ai/terms.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Terms of Service — BrandPilot AI">
+<meta name="twitter:description" content="Read the Terms of Service for BrandPilot AI, including acceptable use, AI-content disclaimers, and liability.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='36' y2='36' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='18' fill='%23fff'/%3E%3Ccircle cx='20' cy='20' r='18' stroke='url(%23g)' stroke-width='2.4'/%3E%3Cpath d='M20 8 L25 20 L20 32 L15 20 Z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!--
+  Page-specific styles for terms.html only.
+  Reuses design tokens (--navy, --indigo, --gradient, --radius-*, --shadow-*, etc.)
+  already defined in :root inside style.css. No rule in style.css is modified,
+  overridden, or duplicated — these are new, additive classes for this page.
+-->
+<style>
+  .skip-link{
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: .88rem;
+    font-weight: 600;
+    z-index: 100;
+    transition: top .15s ease;
+  }
+  .skip-link:focus{ top: 12px; }
+
+  .legal-hero{
+    padding: 48px 24px 8px;
+    text-align: center;
+  }
+  .legal-hero .eyebrow{ margin: 0 0 14px; }
+  .legal-hero h1{
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4.4vw, 2.5rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    color: var(--navy);
+  }
+  .legal-updated{
+    color: var(--ink-dim);
+    font-size: .88rem;
+    margin: 0 0 8px;
+  }
+
+  .legal-wrap{
+    padding: 24px 24px 80px;
+  }
+  .legal-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 34px 30px 36px;
+  }
+  .legal-card section{
+    margin-bottom: 30px;
+  }
+  .legal-card section:last-child{ margin-bottom: 0; }
+  .legal-card h2{
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    color: var(--navy);
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .legal-card h2 .legal-num{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--gradient);
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .legal-card p{
+    margin: 0 0 12px;
+    color: var(--ink);
+    font-size: .96rem;
+    line-height: 1.7;
+  }
+  .legal-card p:last-child{ margin-bottom: 0; }
+  .legal-card ul{
+    margin: 0 0 12px;
+    padding-left: 20px;
+    color: var(--ink);
+    font-size: .96rem;
+    line-height: 1.7;
+  }
+  .legal-card ul:last-child{ margin-bottom: 0; }
+  .legal-card li{ margin-bottom: 6px; }
+  .legal-card li:last-child{ margin-bottom: 0; }
+  .legal-card strong{ color: var(--navy); }
+  .legal-card a{ color: var(--indigo); font-weight: 600; text-decoration: none; }
+  .legal-card a:hover{ text-decoration: underline; }
+
+  .legal-note{
+    border: 1.4px dashed var(--border);
+    border-radius: var(--radius-md);
+    background: #FBFCFE;
+    padding: 14px 16px;
+    font-size: .9rem;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+  .legal-note strong{ color: var(--navy); }
+
+  .legal-toc{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 8px;
+  }
+  .legal-toc a{
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--indigo);
+    background: #EEF0FE;
+    border: 1px solid #DCDFFC;
+    border-radius: 999px;
+    padding: 7px 13px;
+    text-decoration: none;
+    transition: background .15s ease;
+  }
+  .legal-toc a:hover{ background: #E2E5FC; }
+
+  .footer-link{
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .footer-link:hover{ color: var(--indigo); border-color: var(--indigo); }
+
+  .logo:focus-visible,
+  .footer-link:focus-visible,
+  .legal-toc a:focus-visible{
+    outline: 3px solid rgba(79,70,229,.5);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 480px){
+    .legal-wrap{ padding: 18px 18px 60px; }
+    .legal-card{ padding: 24px 18px 26px; }
+    .legal-hero{ padding: 36px 18px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="bg-field" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="index.html" class="logo" aria-label="BrandPilot AI — home">
+      <span class="logo-mark">
+        <svg viewBox="0 0 40 40" width="26" height="26" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2.4"/>
+          <path d="M20 8 L25 20 L20 32 L15 20 Z" fill="url(#g1)"/>
+          <defs>
+            <linearGradient id="g1" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4F46E5"/>
+              <stop offset="1" stop-color="#06B6D4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <span class="logo-text">BrandPilot <em>AI</em></span>
+    </a>
+    <span class="header-tag">Content Studio</span>
+  </div>
+</header>
+
+<main id="main-content">
+  <section class="legal-hero wrap">
+    <p class="eyebrow">Legal</p>
+    <h1>Terms of Service</h1>
+    <p class="legal-updated">Last updated: July 16, 2026</p>
+  </section>
+
+  <section class="wrap legal-wrap">
+    <div class="legal-card">
+
+      <p style="margin-bottom:22px;">
+        These Terms of Service ("Terms") govern your access to and use of BrandPilot AI
+        (the "Service"), an AI-powered content generation tool provided by BrandPilot AI
+        ("we," "us," or "our"). By accessing or using the Service, you agree to be bound by
+        these Terms. If you do not agree, please do not use the Service.
+      </p>
+
+      <nav class="legal-toc" aria-label="Sections in this policy">
+        <a href="#the-service">The Service</a>
+        <a href="#eligibility">Eligibility</a>
+        <a href="#acceptable-use">Acceptable Use</a>
+        <a href="#ai-disclaimer">AI-Generated Content</a>
+        <a href="#user-responsibilities">User Responsibilities</a>
+        <a href="#ip">Intellectual Property</a>
+        <a href="#liability">Limitation of Liability</a>
+        <a href="#termination">Termination</a>
+        <a href="#changes">Changes to These Terms</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <section id="the-service">
+        <h2><span class="legal-num">1</span> The Service</h2>
+        <p>BrandPilot AI lets you generate marketing content — including advertisements,
+          product descriptions, social media posts, brand names, slogans, marketing emails,
+          and video scripts — by providing details about your brand, product, audience, goal,
+          and tone. Output is produced using artificial intelligence models based on the
+          information you supply.</p>
+        <p>We may add, change, or remove features of the Service at any time, and we may
+          suspend or discontinue the Service, in whole or in part, without prior notice.</p>
+      </section>
+
+      <section id="eligibility">
+        <h2><span class="legal-num">2</span> Eligibility</h2>
+        <p>You must be at least 18 years old, or the age of legal majority in your
+          jurisdiction, to use the Service. By using BrandPilot AI, you confirm that you meet
+          this requirement and that you have the authority to agree to these Terms on behalf
+          of yourself or the organization you represent.</p>
+      </section>
+
+      <section id="acceptable-use">
+        <h2><span class="legal-num">3</span> Acceptable Use</h2>
+        <p>You agree to use BrandPilot AI only for lawful purposes. When using the Service,
+          you must not:</p>
+        <ul>
+          <li>Generate content that is illegal, defamatory, fraudulent, deceptive, or
+            misleading;</li>
+          <li>Generate content that infringes the intellectual property, privacy, or other
+            rights of any third party;</li>
+          <li>Generate content that promotes hate speech, discrimination, violence, or
+            harassment against any individual or group;</li>
+          <li>Use the Service to impersonate any person or entity, or to misrepresent your
+            affiliation with any brand or organization;</li>
+          <li>Attempt to reverse-engineer, scrape, or extract the underlying models or
+            source code of the Service;</li>
+          <li>Use automated means (bots, scripts) to access the Service in a way that
+            overburdens our infrastructure or violates rate limits;</li>
+          <li>Use the Service to generate spam or unsolicited bulk marketing communications
+            in violation of applicable law (such as CAN-SPAM, GDPR, or similar regulations).</li>
+        </ul>
+        <p>We reserve the right to suspend or terminate access for any account that violates
+          this Acceptable Use section.</p>
+      </section>
+
+      <section id="ai-disclaimer">
+        <h2><span class="legal-num">4</span> AI-Generated Content Disclaimer</h2>
+        <p>Content produced by BrandPilot AI is generated automatically by artificial
+          intelligence models based on the inputs you provide. You acknowledge and agree
+          that:</p>
+        <ul>
+          <li>AI-generated output is provided as a <strong>starting draft</strong> and may
+            contain factual errors, biased phrasing, or claims that have not been verified;</li>
+          <li>We do not guarantee that generated content is accurate, original, complete,
+            or suitable for any particular purpose;</li>
+          <li>Generated content may occasionally resemble content created by others; you are
+            responsible for checking output for originality before publishing;</li>
+          <li>You are solely responsible for reviewing, editing, fact-checking, and approving
+            all content before you publish, distribute, or otherwise rely on it, including
+            ensuring compliance with advertising, consumer protection, and industry-specific
+            regulations that apply to your business;</li>
+          <li>We are not responsible for any business outcome, including sales, engagement,
+            or reputational impact, resulting from your use of AI-generated content.</li>
+        </ul>
+        <div class="legal-note">
+          <strong>In short:</strong> treat every output as a first draft written by an
+          assistant, not as final, verified copy ready to publish without review.
+        </div>
+      </section>
+
+      <section id="user-responsibilities">
+        <h2><span class="legal-num">5</span> User Responsibilities</h2>
+        <p>As a user of BrandPilot AI, you are responsible for:</p>
+        <ul>
+          <li>The accuracy of the information you enter, including brand names, product
+            details, and audience descriptions;</li>
+          <li>Keeping your account credentials confidential and notifying us promptly of any
+            unauthorized use of your account;</li>
+          <li>Reviewing and approving all generated content before it is published or used
+            in any external communication;</li>
+          <li>Ensuring your use of the Service complies with all laws and regulations
+            applicable to your business, industry, and location;</li>
+          <li>Any consequences arising from content you choose to publish, including legal,
+            financial, or reputational consequences.</li>
+        </ul>
+      </section>
+
+      <section id="ip">
+        <h2><span class="legal-num">6</span> Intellectual Property</h2>
+        <p>The Service, including its design, software, branding, and underlying technology,
+          is owned by BrandPilot AI and protected by intellectual property laws. These Terms
+          do not grant you any rights to our trademarks, logos, or brand assets.</p>
+        <p>As between you and BrandPilot AI, you retain ownership of the content generated
+          for your account, subject to the AI-Generated Content Disclaimer above and any
+          third-party rights that may apply to similar content. We do not claim ownership
+          of the marketing copy you generate and publish.</p>
+      </section>
+
+      <section id="liability">
+        <h2><span class="legal-num">7</span> Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, BrandPilot AI and its officers,
+          employees, and partners will not be liable for any indirect, incidental,
+          special, consequential, or punitive damages, or any loss of profits, revenue,
+          data, or goodwill, arising from or related to your use of, or inability to use,
+          the Service — including damages resulting from AI-generated content that is
+          inaccurate, infringing, or otherwise unsuitable for publication.</p>
+        <p>The Service is provided "as is" and "as available," without warranties of any
+          kind, whether express or implied, including warranties of merchantability, fitness
+          for a particular purpose, or non-infringement. Our total liability for any claim
+          arising from these Terms or the Service will not exceed the amount you paid us, if
+          any, in the twelve (12) months preceding the claim.</p>
+        <p>Some jurisdictions do not allow the exclusion or limitation of certain damages,
+          so some of the above limitations may not apply to you.</p>
+      </section>
+
+      <section id="termination">
+        <h2><span class="legal-num">8</span> Termination</h2>
+        <p>You may stop using the Service, or delete your account, at any time. We may
+          suspend or terminate your access to the Service, with or without notice, if we
+          reasonably believe you have violated these Terms, misused the Service, or created
+          risk or legal exposure for us or other users. Provisions that by their nature
+          should survive termination — including intellectual property, disclaimers, and
+          limitation of liability — will continue to apply.</p>
+      </section>
+
+      <section id="changes">
+        <h2><span class="legal-num">9</span> Changes to These Terms</h2>
+        <p>We may update these Terms from time to time to reflect changes to the Service or
+          for legal or operational reasons. If we make material changes, we will update the
+          "Last updated" date at the top of this page. Your continued use of the Service
+          after changes take effect constitutes acceptance of the revised Terms.</p>
+      </section>
+
+      <section id="contact">
+        <h2><span class="legal-num">10</span> Contact Information</h2>
+        <p>If you have questions about these Terms, please contact us:</p>
+        <p>
+          <strong>BrandPilot AI — Legal Team</strong><br>
+          Email: <a href="mailto:legal@brandpilot.ai">legal@brandpilot.ai</a><br>
+          Address: 128 Market Street, Suite 400, San Francisco, CA 94105, USA
+        </p>
+      </section>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> BrandPilot AI</span>
+    <a href="terms.html" class="footer-link">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

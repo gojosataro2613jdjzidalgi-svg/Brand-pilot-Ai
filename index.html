@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BrandPilot AI — Generate on-brand content in seconds</title>
+<meta name="description" content="BrandPilot AI drafts ready-to-use marketing copy — ads, product descriptions, social posts, slogans, emails, and video scripts — tailored to your brand, audience, and tone in seconds.">
+<link rel="canonical" href="https://brandpilot.ai/">
+<meta name="theme-color" content="#4F46E5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BrandPilot AI — Generate on-brand content in seconds">
+<meta property="og:description" content="Fill in your brand's name, product, and audience — BrandPilot AI drafts ready-to-use marketing copy in the language you choose.">
+<meta property="og:url" content="https://brandpilot.ai/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BrandPilot AI — Generate on-brand content in seconds">
+<meta name="twitter:description" content="Fill in your brand's name, product, and audience — BrandPilot AI drafts ready-to-use marketing copy in the language you choose.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='36' y2='36' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='18' fill='%23fff'/%3E%3Ccircle cx='20' cy='20' r='18' stroke='url(%23g)' stroke-width='2.4'/%3E%3Cpath d='M20 8 L25 20 L20 32 L15 20 Z' fill='url(%23g)'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
@@ -11,13 +22,15 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to content</a>
+
 <div class="bg-field" aria-hidden="true"></div>
 
 <header class="site-header">
   <div class="wrap header-row">
-    <a href="#" class="logo">
+    <a href="index.html" class="logo" aria-label="BrandPilot AI — home">
       <span class="logo-mark">
-        <svg viewBox="0 0 40 40" width="26" height="26" fill="none">
+        <svg viewBox="0 0 40 40" width="26" height="26" fill="none" aria-hidden="true">
           <circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2.4"/>
           <path d="M20 8 L25 20 L20 32 L15 20 Z" fill="url(#g1)"/>
           <defs>
@@ -34,7 +47,7 @@
   </div>
 </header>
 
-<main>
+<main id="main-content">
   <section class="hero wrap">
     <p class="eyebrow">Brand content, plotted and generated</p>
     <h1>Give your brand a heading.<br>We chart the content.</h1>
@@ -50,52 +63,58 @@
 
       <div class="field">
         <label for="brandName">Brand name</label>
-        <input type="text" id="brandName" name="brandName" placeholder="e.g. Lumora" autocomplete="off">
-        <span class="field-error" id="err-brandName">Enter your brand name to continue.</span>
+        <input type="text" id="brandName" name="brandName" placeholder="e.g. Lumora" autocomplete="off" required aria-required="true" aria-describedby="err-brandName">
+        <span class="field-error" id="err-brandName" role="alert">Enter your brand name to continue.</span>
       </div>
 
       <div class="field">
         <label for="productType">Product / service type</label>
-        <input type="text" id="productType" name="productType" placeholder="e.g. Skincare serum, mobile app, coffee shop" autocomplete="off">
-        <span class="field-error" id="err-productType">Tell us what you're promoting.</span>
+        <input type="text" id="productType" name="productType" placeholder="e.g. Skincare serum, mobile app, coffee shop" autocomplete="off" required aria-required="true" aria-describedby="err-productType">
+        <span class="field-error" id="err-productType" role="alert">Tell us what you're promoting.</span>
       </div>
 
       <div class="field">
         <label for="targetAudience">Target audience</label>
-        <input type="text" id="targetAudience" name="targetAudience" placeholder="e.g. Busy professionals aged 25–40" autocomplete="off">
-        <span class="field-error" id="err-targetAudience">Describe who this content should speak to.</span>
+        <input type="text" id="targetAudience" name="targetAudience" placeholder="e.g. Busy professionals aged 25–40" autocomplete="off" required aria-required="true" aria-describedby="err-targetAudience">
+        <span class="field-error" id="err-targetAudience" role="alert">Describe who this content should speak to.</span>
       </div>
-<div class="field">
-  <label for="contentType">Content type</label>
-  <div class="select-wrap">
-    <select id="contentType" name="contentType">
-      <option value="advertisement">Advertisement</option>
-      <option value="product_description">Product Description</option>
-      <option value="social_post">Social Media Post</option>
-      <option value="brand_name">Brand Name</option>
-      <option value="slogan">Slogan</option>
-      <option value="marketing_email">Marketing Email</option>
-      <option value="video_script">Video Script</option>
-    </select>
-  </div>
-</div>
-<div class="field">
-  <label for="platform">Platform</label>
-  <div class="select-wrap">
-    <select id="platform" name="platform">
-      <option value="general" selected>General</option>
-      <option value="instagram">Instagram</option>
-      <option value="facebook">Facebook</option>
-      <option value="tiktok">TikTok</option>
-      <option value="linkedin">LinkedIn</option>
-      <option value="x">X (Twitter)</option>
-      <option value="youtube">YouTube</option>
-    </select>
-    <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
+
+      <div class="field">
+        <label for="contentType">Content type</label>
+        <div class="select-wrap">
+          <select id="contentType" name="contentType">
+            <option value="advertisement">Advertisement</option>
+            <option value="product_description">Product Description</option>
+            <option value="social_post">Social Media Post</option>
+            <option value="brand_name">Brand Name</option>
+            <option value="slogan">Slogan</option>
+            <option value="marketing_email">Marketing Email</option>
+            <option value="video_script">Video Script</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="platform">Platform</label>
+        <div class="select-wrap">
+          <select id="platform" name="platform">
+            <option value="general" selected>General</option>
+            <option value="instagram">Instagram</option>
+            <option value="facebook">Facebook</option>
+            <option value="tiktok">TikTok</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="x">X (Twitter)</option>
+            <option value="youtube">YouTube</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
       <div class="field">
         <label for="language">Output language</label>
         <div class="select-wrap">
@@ -110,42 +129,40 @@
         </div>
       </div>
 
-<div class="field">
-  <label for="goal">Marketing Goal</label>
-  <div class="select-wrap">
-    <select id="goal" name="goal">
-      <option value="increase_sales">Increase Sales</option>
-      <option value="brand_awareness">Brand Awareness</option>
-      <option value="get_leads">Get Leads</option>
-      <option value="website_traffic">Website Traffic</option>
-      <option value="app_downloads">App Downloads</option>
-      <option value="social_engagement">Social Engagement</option>
-    </select>
+      <div class="field">
+        <label for="goal">Marketing goal</label>
+        <div class="select-wrap">
+          <select id="goal" name="goal">
+            <option value="increase_sales">Increase Sales</option>
+            <option value="brand_awareness">Brand Awareness</option>
+            <option value="get_leads">Get Leads</option>
+            <option value="website_traffic">Website Traffic</option>
+            <option value="app_downloads">App Downloads</option>
+            <option value="social_engagement">Social Engagement</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
 
-    <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
-
-<div class="field">
-  <label for="tone">Tone of Voice</label>
-  <div class="select-wrap">
-    <select id="tone" name="tone">
-      <option value="professional">Professional</option>
-      <option value="friendly">Friendly</option>
-      <option value="luxury">Luxury</option>
-      <option value="persuasive">Persuasive</option>
-      <option value="genz">Gen Z</option>
-      <option value="minimal">Minimal</option>
-      <option value="funny">Funny</option>
-    </select>
-
-    <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</div>
+      <div class="field">
+        <label for="tone">Tone of voice</label>
+        <div class="select-wrap">
+          <select id="tone" name="tone">
+            <option value="professional">Professional</option>
+            <option value="friendly">Friendly</option>
+            <option value="luxury">Luxury</option>
+            <option value="persuasive">Persuasive</option>
+            <option value="genz">Gen Z</option>
+            <option value="minimal">Minimal</option>
+            <option value="funny">Funny</option>
+          </select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
 
       <button type="submit" class="generate-btn" id="generateBtn">
         <span class="btn-ring" aria-hidden="true"></span>
@@ -158,7 +175,7 @@
       </button>
     </form>
 
-    <section class="result-card" id="resultCard" aria-live="polite">
+    <section class="result-card" id="resultCard" aria-live="polite" aria-atomic="true" aria-label="Generated content">
       <div class="result-header">
         <div class="result-title">
           <span class="result-dot" id="resultDot"></span>
@@ -194,10 +211,20 @@
 <footer class="site-footer">
   <div class="wrap footer-row">
     <span>© <span id="year"></span> BrandPilot AI</span>
-    <span class="footer-dim">Draft copy is a starting point — always review before publishing.</span>
+
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+
+    <span class="footer-dim">
+      Draft copy is a starting point — always review before publishing.
+    </span>
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js" defer></script>
 </body>
 </html>

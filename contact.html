@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — BrandPilot AI</title>
+<meta name="description" content="Get in touch with BrandPilot AI. Email us, send a message through our contact form, or check our frequently asked questions.">
+<link rel="canonical" href="https://brandpilot.ai/contact.html">
+<meta name="theme-color" content="#4F46E5">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact — BrandPilot AI">
+<meta property="og:description" content="Get in touch with BrandPilot AI — email us or send a message through our contact form.">
+<meta property="og:url" content="https://brandpilot.ai/contact.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Contact — BrandPilot AI">
+<meta name="twitter:description" content="Get in touch with BrandPilot AI — email us or send a message through our contact form.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='4' y1='4' x2='36' y2='36' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='18' fill='%23fff'/%3E%3Ccircle cx='20' cy='20' r='18' stroke='url(%23g)' stroke-width='2.4'/%3E%3Cpath d='M20 8 L25 20 L20 32 L15 20 Z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!--
+  Page-specific styles for contact.html only.
+  Form fields, buttons, and cards intentionally REUSE the existing
+  .field / .generator-card / .generate-btn / .result-card classes
+  from style.css (unmodified) so the form looks pixel-identical to
+  the rest of the site. Everything below is new and additive:
+  contact-info panel, social icon row, and the FAQ accordion.
+-->
+<style>
+  .skip-link{
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: .88rem;
+    font-weight: 600;
+    z-index: 100;
+    transition: top .15s ease;
+  }
+  .skip-link:focus{ top: 12px; }
+
+  .contact-wrap{
+    padding-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Contact info card — mirrors .result-card's surface/border/shadow */
+  .info-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 28px 26px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .info-block-title{
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin: 0 0 8px;
+  }
+  .info-email{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .info-email:hover{ color: var(--indigo); }
+  .info-email .icon-badge{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: #EEF0FE;
+    color: var(--indigo);
+    flex-shrink: 0;
+  }
+  .info-sub{
+    margin: 6px 0 0;
+    color: var(--ink-dim);
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .info-divider{
+    height: 1px;
+    background: var(--border);
+    border: none;
+    margin: 0;
+  }
+  .info-address{
+    margin: 0;
+    color: var(--ink);
+    font-size: .92rem;
+    line-height: 1.65;
+  }
+
+  .social-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .social-link{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #FBFCFE;
+    border: 1.4px solid var(--border);
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .social-link:hover{
+    border-color: var(--indigo);
+    color: var(--indigo);
+    background: #EEF0FE;
+  }
+  .social-link:focus-visible{
+    outline: 3px solid rgba(79,70,229,.5);
+    outline-offset: 2px;
+  }
+
+  /* Form success state */
+  .form-success{
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: #EEF0FE;
+    border: 1px solid #DCDFFC;
+    color: var(--navy);
+    font-size: .9rem;
+    margin-top: 14px;
+  }
+  .form-success.is-visible{ display: flex; }
+  .form-success .dot{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 4px rgba(6,182,212,.16);
+    flex-shrink: 0;
+  }
+
+  textarea.contact-textarea{
+    font-family: inherit;
+    font-size: .96rem;
+    color: var(--ink);
+    background: #FBFCFE;
+    border: 1.4px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    outline: none;
+    resize: vertical;
+    min-height: 120px;
+    width: 100%;
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  textarea.contact-textarea::placeholder{ color: #A6ACBD; }
+  textarea.contact-textarea:hover{ border-color: #C7CCDC; }
+  textarea.contact-textarea:focus{
+    border-color: var(--indigo);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(79,70,229,.12);
+  }
+  .field.invalid textarea.contact-textarea{
+    border-color: var(--danger);
+    background: #FEF4F4;
+  }
+
+  /* FAQ */
+  .faq-heading{
+    text-align: center;
+    padding: 8px 24px 0;
+  }
+  .faq-heading .eyebrow{ margin: 0 0 12px; }
+  .faq-heading h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.4vw, 2rem);
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    margin: 0 0 10px;
+  }
+  .faq-heading p{
+    max-width: 480px;
+    margin: 0 auto;
+    color: var(--ink-dim);
+    font-size: .98rem;
+    line-height: 1.6;
+  }
+
+  .faq-list{
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: 4px 20px;
+  }
+  .faq-item summary{
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: .96rem;
+    color: var(--navy);
+  }
+  .faq-item summary::-webkit-details-marker{ display: none; }
+  .faq-item summary:focus-visible{
+    outline: 3px solid rgba(79,70,229,.5);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .faq-chevron{
+    flex-shrink: 0;
+    color: var(--ink-dim);
+    transition: transform .2s ease;
+  }
+  .faq-item[open] .faq-chevron{ transform: rotate(180deg); }
+  .faq-item p{
+    margin: 0 0 18px;
+    color: var(--ink-dim);
+    font-size: .92rem;
+    line-height: 1.7;
+  }
+
+  .footer-link{
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .footer-link:hover{ color: var(--indigo); border-color: var(--indigo); }
+  .logo:focus-visible,
+  .footer-link:focus-visible{
+    outline: 3px solid rgba(79,70,229,.5);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (min-width: 760px){
+    .contact-wrap{
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 480px){
+    .info-card{ padding: 22px 18px 24px; }
+    .faq-item{ padding: 4px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<div class="bg-field" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="index.html" class="logo" aria-label="BrandPilot AI — home">
+      <span class="logo-mark">
+        <svg viewBox="0 0 40 40" width="26" height="26" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="url(#g1)" stroke-width="2.4"/>
+          <path d="M20 8 L25 20 L20 32 L15 20 Z" fill="url(#g1)"/>
+          <defs>
+            <linearGradient id="g1" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#4F46E5"/>
+              <stop offset="1" stop-color="#06B6D4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <span class="logo-text">BrandPilot <em>AI</em></span>
+    </a>
+    <span class="header-tag">Content Studio</span>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <section class="hero wrap">
+    <p class="eyebrow">Contact us</p>
+    <h1>Let's talk about your brand.</h1>
+    <p class="hero-sub">Questions about BrandPilot AI, feedback on your generated content, or ideas for what we should build next — we'd love to hear from you.</p>
+  </section>
+
+  <section class="wrap contact-wrap">
+
+    <form class="generator-card" id="contactForm" novalidate aria-describedby="formSuccessMsg">
+      <div class="card-heading">
+        <h2>Send us a message</h2>
+        <span class="card-heading-line" aria-hidden="true"></span>
+      </div>
+
+      <div class="field">
+        <label for="contactName">Name</label>
+        <input type="text" id="contactName" name="contactName" placeholder="e.g. Alex Rivera" autocomplete="name" required aria-required="true" aria-describedby="err-contactName">
+        <span class="field-error" id="err-contactName" role="alert">Enter your name.</span>
+      </div>
+
+      <div class="field">
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" name="contactEmail" placeholder="e.g. alex@yourbrand.com" autocomplete="email" required aria-required="true" aria-describedby="err-contactEmail">
+        <span class="field-error" id="err-contactEmail" role="alert">Enter a valid email address.</span>
+      </div>
+
+      <div class="field">
+        <label for="contactMessage">Message</label>
+        <textarea class="contact-textarea" id="contactMessage" name="contactMessage" placeholder="Tell us what's on your mind…" required aria-required="true" aria-describedby="err-contactMessage"></textarea>
+        <span class="field-error" id="err-contactMessage" role="alert">Enter a message before sending.</span>
+      </div>
+
+      <button type="submit" class="generate-btn" id="contactSubmitBtn">
+        <span class="btn-ring" aria-hidden="true"></span>
+        <span class="btn-label">
+          <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 4l16 8-16 8 4-8-4-8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span class="btn-text">Send message</span>
+        </span>
+      </button>
+
+      <p class="form-success" id="formSuccessMsg" role="status">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Thanks — your message has been sent. We'll reply within 1–2 business days.</span>
+      </p>
+    </form>
+
+    <aside class="info-card" aria-label="Other ways to reach us">
+      <div>
+        <p class="info-block-title">Email us directly</p>
+        <a class="info-email" href="mailto:hello@brandpilot.ai">
+          <span class="icon-badge" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M4 6.5l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          hello@brandpilot.ai
+        </a>
+        <p class="info-sub">For support, billing, or general questions — we typically reply within 1–2 business days.</p>
+      </div>
+
+      <hr class="info-divider">
+
+      <div>
+        <p class="info-block-title">Office</p>
+        <p class="info-address">128 Market Street, Suite 400<br>San Francisco, CA 94105, USA</p>
+      </div>
+
+      <hr class="info-divider">
+
+      <div>
+        <p class="info-block-title">Follow us</p>
+        <div class="social-row">
+          <a class="social-link" href="#" aria-label="BrandPilot AI on X (Twitter)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <a class="social-link" href="#" aria-label="BrandPilot AI on LinkedIn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M7.5 10v6M7.5 7.5v.01M12 16v-3.5c0-1.4 1-2.5 2.25-2.5S16.5 11.1 16.5 12.5V16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <a class="social-link" href="#" aria-label="BrandPilot AI on Instagram">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="17.2" cy="6.8" r="1" fill="currentColor"/>
+            </svg>
+          </a>
+          <a class="social-link" href="#" aria-label="BrandPilot AI on YouTube">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M10.5 9.5l5 2.5-5 2.5v-5z" fill="currentColor"/>
+            </svg>
+          </a>
+        </div>
+        <p class="info-sub">Links are placeholders — swap in your real profile URLs when they're ready.</p>
+      </div>
+    </aside>
+
+  </section>
+
+  <section class="faq-heading wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2>Frequently asked questions</h2>
+    <p>Can't find what you're looking for? Send us a message above.</p>
+  </section>
+
+  <section class="wrap" style="padding: 24px 24px 80px;">
+    <div class="faq-list">
+
+      <details class="faq-item">
+        <summary>
+          Is the content BrandPilot AI generates ready to publish as-is?
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <p>Generated content is a strong first draft, not a finished product. We recommend reviewing every piece of copy for accuracy, tone, and brand fit before you publish it.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          Which languages can I generate content in?
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <p>BrandPilot AI currently supports English, Arabic, and French. Choose your output language in the "Output language" field before generating content.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          What content types can I create?
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <p>Advertisements, product descriptions, social media posts, brand names, slogans, marketing emails, and video scripts — all from the same form.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          How quickly will I hear back after contacting you?
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <p>We aim to reply to every message within 1–2 business days. For urgent account or billing issues, email us directly at hello@brandpilot.ai.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          Do you offer plans for teams or agencies?
+          <svg class="faq-chevron" width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </summary>
+        <p>We're actively working on team and agency plans. Send us a message and we'll let you know as soon as they're available.</p>
+      </details>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <span>© <span id="year"></span> BrandPilot AI</span>
+    <a href="contact.html" class="footer-link">Contact</a>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Lightweight client-side validation + success state for the contact form.
+  // No backend endpoint is wired up yet — replace the "TODO" section below
+  // with a real fetch() call to your form-handling API or service.
+  (function () {
+    var form = document.getElementById('contactForm');
+    var successMsg = document.getElementById('formSuccessMsg');
+
+    function setInvalid(fieldId, isInvalid) {
+      var field = document.getElementById(fieldId).closest('.field');
+      field.classList.toggle('invalid', isInvalid);
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      successMsg.classList.remove('is-visible');
+
+      var name = document.getElementById('contactName');
+      var email = document.getElementById('contactEmail');
+      var message = document.getElementById('contactMessage');
+
+      var nameValid = name.value.trim().length > 0;
+      var emailValid = isValidEmail(email.value.trim());
+      var messageValid = message.value.trim().length > 0;
+
+      setInvalid('contactName', !nameValid);
+      setInvalid('contactEmail', !emailValid);
+      setInvalid('contactMessage', !messageValid);
+
+      if (!nameValid || !emailValid || !messageValid) {
+        return;
+      }
+
+      // TODO: replace with a real submission, e.g.
+      // fetch('/api/contact', { method: 'POST', body: JSON.stringify({...}) })
+      form.reset();
+      successMsg.classList.add('is-visible');
+    });
+  })();
+</script>
+</body>
+</html>
