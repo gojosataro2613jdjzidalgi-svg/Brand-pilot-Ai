@@ -165,6 +165,69 @@
         </div>
       </div>
 
+      <div class="field">
+        <label for="productDescription">Product description <span class="field-optional">(optional)</span></label>
+        <textarea id="productDescription" name="productDescription" rows="3" placeholder="Add extra detail — ingredients, materials, features, what makes it different…" autocomplete="off" aria-describedby="hint-productDescription"></textarea>
+        <span class="field-hint" id="hint-productDescription">The more context you give, the sharper the copy.</span>
+      </div>
+
+      <div class="field">
+        <label for="productImageInput">Product image <span class="field-optional">(optional)</span></label>
+
+        <div class="upload-dropzone"
+             id="uploadDropzone"
+             tabindex="0"
+             role="button"
+             aria-label="Upload product image. Click, or drag and drop a JPG, PNG or WEBP file here."
+             aria-describedby="uploadHint err-productImage">
+
+          <input type="file"
+                 id="productImageInput"
+                 name="productImage"
+                 accept="image/jpeg,image/png,image/webp"
+                 aria-hidden="true"
+                 tabindex="-1"
+                 hidden>
+
+          <!-- Empty / prompt state -->
+          <div class="upload-prompt" id="uploadPrompt">
+            <span class="upload-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path d="M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <p class="upload-text"><strong>Click to upload</strong> or drag and drop</p>
+            <p class="upload-hint" id="uploadHint">JPG, PNG or WEBP · up to 8MB</p>
+          </div>
+
+          <!-- Preview state -->
+          <div class="upload-preview" id="uploadPreview" hidden>
+            <div class="upload-preview-thumb">
+              <img id="uploadPreviewImg" alt="Preview of selected product image">
+            </div>
+            <div class="upload-preview-info">
+              <span class="upload-file-name" id="uploadFileName"></span>
+              <span class="upload-file-size" id="uploadFileSize"></span>
+              <span class="upload-ai-note" id="uploadAiNote">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z" fill="currentColor"/>
+                </svg>
+                AI will analyze this image
+              </span>
+            </div>
+            <button type="button" class="upload-remove-btn" id="uploadRemoveBtn" aria-label="Remove uploaded product image">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>Remove</span>
+            </button>
+          </div>
+        </div>
+
+        <span class="field-error" id="err-productImage" role="alert">Please upload a JPG, PNG, or WEBP image under 8MB.</span>
+      </div>
+
       <button type="submit" class="generate-btn" id="generateBtn">
         <span class="btn-ring" aria-hidden="true"></span>
         <span class="btn-label">
