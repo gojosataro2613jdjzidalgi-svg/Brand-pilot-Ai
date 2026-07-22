@@ -28,7 +28,18 @@ function getPlatformInstruction(platform) {
   return PLATFORM_INSTRUCTIONS[key] || PLATFORM_INSTRUCTIONS.general;
 }
 
-function buildPrompt({ brandName, productType, targetAudience, language,goal,tone, contentType, platform }) {
+function buildPrompt({ brandName, productType, targetAudience, productDescription, language, goal, tone, contentType, platform, hasImage }) {
+
+// Extra product context, appended to every prompt variant below (including
+// the brand_name early-return) so both text-only and image-assisted
+// requests share the same enrichment logic.
+const descriptionLine = productDescription
+  ? `Product Description: ${productDescription}`
+  : `Product Description: Not provided.`;
+
+const imageInstruction = hasImage
+  ? `\nProduct Image: A real photo of the actual product has been attached to this request. Carefully examine its packaging, colors, materials, shape, style, and mood, and weave specific, authentic visual details from the photo into the copy so it reads as if it were written by someone who has genuinely seen and handled the product.\n`
+  : "";
 
 let task = "";
 
@@ -56,7 +67,8 @@ Marketing Goal: ${goal}
 Tone of Voice: ${tone}
 Product Type: ${productType}
 Target Platform: ${platform || "general"}
-
+${descriptionLine}
+${imageInstruction}
 Target Audience: ${targetAudience}
 
 Return ONLY valid JSON in this format:
@@ -105,6 +117,7 @@ Before writing:
 3. Analyze the marketing goal.
 4. Choose the most effective marketing strategy.
 5. Create content optimized for engagement, trust, and conversions.
+${hasImage ? "6. Study the attached product image closely and let its real visual details inform your word choices." : ""}
 
 Rules:
 - Never generate generic or repetitive content.
@@ -145,6 +158,8 @@ Brand Name: ${brandName}
 
 Product Type: ${productType}
 
+${descriptionLine}
+${imageInstruction}
 Target Audience: ${targetAudience}
 
 IMPORTANT:
@@ -260,7 +275,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    const { brandName, productType, targetAudience, language,goal,tone, contentType, platform } = body || {};
+    const { brandName, productType, targetAudience, productDescription, language, goal, tone, contentType, platform, productImage } = body || {};
 
     if (!brandName || !productType || !targetAudience || !language) {
       return res.status(400).json({
@@ -268,16 +283,59 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    // --------------------------------------------------------------------
+    // Product image validation (defense in depth — the client already
+    // validates type/size before sending, but the server never trusts a
+    // client-supplied payload). Expected shape: { data: base64String,
+    // mimeType: "image/jpeg" | "image/png" | "image/webp" }.
+    // --------------------------------------------------------------------
+    const ALLOWED_IMAGE_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
+    // 8MB decoded, converted to an approximate base64-character ceiling
+    // (base64 inflates size by ~4/3), plus a small buffer for padding.
+    const MAX_IMAGE_BASE64_LENGTH = Math.ceil((8 * 1024 * 1024 * 4) / 3) + 1024;
+
+    let sanitizedImage = null;
+    if (productImage && typeof productImage === "object") {
+      const { data: imgData, mimeType } = productImage;
+      const looksValid = typeof imgData === "string" && imgData.length > 0 && ALLOWED_IMAGE_MIME_TYPES.includes(mimeType);
+
+      if (looksValid && imgData.length <= MAX_IMAGE_BASE64_LENGTH) {
+        sanitizedImage = { data: imgData, mimeType };
+      } else if (looksValid) {
+        return res.status(400).json({ error: "Uploaded image is too large. Maximum size is 8MB." });
+      } else {
+        return res.status(400).json({ error: "Invalid product image. Use JPG, PNG, or WEBP." });
+      }
+    }
+
+    // Keep free-form description input to a sane length before it reaches the prompt.
+    const safeDescription = typeof productDescription === "string" ? productDescription.trim().slice(0, 800) : "";
+
     const prompt = buildPrompt({
   brandName,
   productType,
   targetAudience,
+  productDescription: safeDescription,
   language,
   goal,
   tone,
   contentType,
-  platform
+  platform,
+  hasImage: !!sanitizedImage
 });
+
+    // The text prompt always comes first; the product photo (if any) is
+    // attached as a second part so Gemini reasons about them together as a
+    // single multimodal request rather than as two separate calls.
+    const parts = [{ text: prompt }];
+    if (sanitizedImage) {
+      parts.push({
+        inlineData: {
+          mimeType: sanitizedImage.mimeType,
+          data: sanitizedImage.data
+        }
+      });
+    }
 
     // Uses fetchGeminiWithRetry instead of a plain fetch() so that transient
     // 503 (UNAVAILABLE) errors from Gemini are retried automatically.
@@ -290,7 +348,7 @@ module.exports = async function handler(req, res) {
         contents: [
           {
             role: "user",
-            parts: [{ text: prompt }]
+            parts
           }
         ],
         generationConfig: {
